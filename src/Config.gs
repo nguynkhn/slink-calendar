@@ -38,23 +38,9 @@ function getSyncRange(config) {
   return { fromDate, toDate };
 }
 
-function getCalendarLabels(config) {
-  if (!config._labelIds) {
-    config._labelIds = Object.fromEntries(
-      Object.values(EventCategories)
-        .map(categoryName => [categoryName, Utilities.getUuid()]),
-    );
-    saveConfig(config);
-  }
-
-  return Object.fromEntries(
-    Object.entries(config._labelIds).map(([categoryName, labelId]) => [
-      categoryName,
-      ({
-        id: labelId,
-        name: categoryName,
-        backgroundColor: config.categoryColors[categoryName],
-      })
-    ])
-  );
+function getCategoryLabels(config) {
+  return Object.values(EventCategories).map(categoryName => ({
+    name: categoryName,
+    backgroundColor: config.categoryColors[categoryName],
+  }));
 }

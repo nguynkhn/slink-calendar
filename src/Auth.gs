@@ -4,6 +4,7 @@ function getService_() {
   return OAuth2.createService('slink')
     .setClientId('ptit-connect')
     .setParam('access_type', 'offline')
+    .setParam('prompt', 'consent')
     .setScope('openid profile email offline_access')
     .setCallbackFunction('authCallback')
     .setAuthorizationBaseUrl('https://gwdu.ptit.edu.vn/sso/realms/ptit/protocol/openid-connect/auth')

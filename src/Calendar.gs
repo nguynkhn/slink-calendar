@@ -30,15 +30,20 @@ function getGeneratedEvents(calendarId, fromDate, toDate) {
   });
 }
 
-function syncCalendarLabels(calendarId, calendarLabels) {
-  const calendar = Calendar.Calendars.get(calendarId);
+function getCalendarLabels(calendarId, categoryLabels) {
+  const oldCalendar = Calendar.Calendars.get(calendarId);
 
-  Calendar.Calendars.update({
-    summary: calendar.summary,
-    labelProperties: {
-      eventLabels: calendarLabels,
-    },
-  }, calendar.id);
+  if (!oldCalendar.labelProperties) {
+    const newCalendar = Calendar.Calendars.update({
+      summary: oldCalendar.summary,
+      labelProperties: {
+        eventLabels: categoryLabels,
+      },
+    }, oldCalendar.id);
+    return newCalendar.labelProperties.eventLabels;
+  }
+
+  return oldCalendar.labelProperties.eventLabels;
 }
 
 function syncCalendarEvents(calendarId, oldEvents, newEvents) {
